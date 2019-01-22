@@ -16,7 +16,7 @@
 	<body><!--https://www.w3schools.com/html/html5_webworkers.asp-->
 	        <input type="file" id="input" style="visibility:hidden;position:fixed;z-index:-1;bottom:0;right:0;"/>
 		<h1>Content-Aware Scaling</h1>
-		<input type="checkbox"/> Faster Scaling<br>
+		<input type="checkbox" checked/> Faster Scaling<br>
 		<button onclick="doEverything(this,0,window.url,function(url,args){document.getElementById('res').download='aware.png';document.getElementById('res').href=document.getElementById('r').src=url;document.getElementById('res').style.display='';args[0].removeAttribute('disabled');});">2x Scale</button><br/>
 		<button onclick="doGIF(this,window.url);">Generate 20-Frame GIF at 1.05x Scale per Frame</button><br>
 		<progress min="0" max="100" value="0"></progress>
