@@ -73,12 +73,12 @@ async function doEverything(btn,gif,url,cb){
 						doEverything(btn,gif,b,function(ur){
 							console.log("g"+frm);
 							var img=document.createElement("IMG");
-							img.onload=function(){window.gif.addFrame(img,{delay:50});};
+							img.onload=function(){window.giff.addFrame(img,{delay:50});};
 							img.src=url;
 							if(frm+1==window.gifFrames.length){
 								cb(ur,[btn]);
-								window.gif.on('finished',function(blob){var url=window.URL.createObjectURL(blob);document.getElementById("r").src=url;document.getElementById("res").href=url;document.getElementById("res").download="aware.gif";document.getElementById("res").style.display="";});
-								window.gif.render();
+								window.giff.on('finished',function(blob){var url=window.URL.createObjectURL(blob);document.getElementById("r").src=url;document.getElementById("res").href=url;document.getElementById("res").download="aware.gif";document.getElementById("res").style.display="";});
+								window.giff.render();
 								console.log("h");
 							}
 							rr();
