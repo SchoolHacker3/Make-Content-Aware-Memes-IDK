@@ -11,7 +11,7 @@ async function getGifFrames(gifURL){
 		oReq.open("GET",gifURL,true);
 		oReq.responseType="arraybuffer";
 		oReq.onload=function(oEvent){
-			if(oReq.response)window.gifFrames=(new GIF(oReq.response)).decompressFrames(true);
+			if(oReq.response)window.gifFrames=(new GIFuct(oReq.response)).decompressFrames(true);
 			r();
 		};
 		oReq.send(null);
@@ -60,7 +60,7 @@ async function doEverything(btn,gif,url,cb){
 	document.getElementById("res").style.display="none";
 	if(window.scaleGif){
 		await new Promise(r=>{
-			window.giff=new GIFuct({workers:5});
+			window.giff=new GIF({workers:5});
 			r(getGifFrames(url));
 		});
 		console.log(window.gifFrames.length);
