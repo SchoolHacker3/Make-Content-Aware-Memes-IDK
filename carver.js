@@ -62,8 +62,10 @@ async function doEverything(btn,gif,url,cb){
 	var img=document.getElementById('i');
 	document.getElementById("res").style.display="none";
 	if(window.scaleGif){
-		window.giff=new GIF({workers:5});
-		await new Promise(r=>r(getGifFrames(url)));
+		await new Promise(r=>{
+			window.giff=new GIF({workers:5});
+			r(getGifFrames(url));
+		});
 		console.log(window.gifFrames.length);
 		await new Promise(async r=>{
 			window.scaleGif=false;
@@ -75,7 +77,7 @@ async function doEverything(btn,gif,url,cb){
 							console.log("g"+frm);
 							var img=document.createElement("IMG");
 							img.onload=function(){window.giff.addFrame(img,{delay:50});};
-							img.src=url;
+							img.src=ur;
 							if(frm+1==window.gifFrames.length){
 								cb(ur,[btn]);
 								window.giff.on('finished',function(blob){var url=window.URL.createObjectURL(blob);document.getElementById("r").src=url;document.getElementById("res").href=url;document.getElementById("res").download="aware.gif";document.getElementById("res").style.display="";});
