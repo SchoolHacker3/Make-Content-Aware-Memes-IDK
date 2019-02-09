@@ -16,7 +16,7 @@
 	<body>
 	        <input type="file" id="input" style="visibility:hidden;position:fixed;z-index:-1;bottom:0;right:0;"/>
 		<h1>Content-Aware Scaling</h1>
-		<input type="checkbox" checked/> Faster Scaling <i>(if you want to watch the GIF get scaled)</i><br>
+		<input type="checkbox" checked/> Faster Scaling <i>(if you want to watch the image get scaled)</i><br>
 		<button onclick="doEverything(this,0,window.url,function(url,args){document.getElementById('res').download='aware.png';document.getElementById('res').href=document.getElementById('r').src=url;document.getElementById('res').style.display='';args[0].removeAttribute('disabled');window.otherBtn(args[0]).removeAttribute('disabled');document.querySelector('#input').removeAttribute('disabled');});">2x Scale</button><br/>
 		<button onclick="doGIF(this,window.url);">Generate 20-Frame GIF at 1.05x Scale per Frame</button> <i>&lt;- Note: Does NOT support animated GIFs. (but it will still process the first frame of one)</i><br>
 		<progress min="0" max="100" value="0"></progress>
