@@ -61,9 +61,11 @@
 		var img=document.getElementById('i');
 		document.getElementById("res").style.display="none";
 		if(window.scaleGif){
+			await new Promise(r=>r(getGifFrames(url)));
+			console.log(window.gifFrames.length);
 			await new Promise(async r=>{
 				window.scaleGif=false;
-				for(var frm=0;frm<getGifFrames(url).length;frm++){
+				for(var frm=0;frm<window.gifFrames.length;frm++){
 					console.log("c"+frm);
 						await new Promise(rr=>drawPatch(window.gifFrames[frm],function(b){
 							console.log("f"+frm);
