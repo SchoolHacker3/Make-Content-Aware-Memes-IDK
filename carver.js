@@ -72,7 +72,7 @@
 							doEverything(btn,gif,b,function(ur){
 								console.log("g"+frm);
 								if(frm+1==window.gifFrames.length){
-									cb(ur);
+									cb(ur,[btn]);
 									console.log("h");
 								}
 								rr();
