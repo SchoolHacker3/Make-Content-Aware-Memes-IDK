@@ -55,7 +55,7 @@
 		var img=document.getElementById('i');
 		document.getElementById("res").style.display="none";
 		if(window.scaleGif){
-			await new Promise(r=>{
+			await new Promise(async r=>{
 				window.scaleGif=false;
 				for(var frm=0;frm<window.gifFrames.length;frm++){
 						await new Promise(rr=>drawPatch(window.gifFrames[frm],function(b){
