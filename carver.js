@@ -18,6 +18,7 @@
 			};
 			oReq.send(null);
 		});
+		console.log("b");
 	  return window.gifFrames;
 	}
 	async function doGIF(btn,url){
@@ -40,6 +41,7 @@
 		//window.otherBtn(btn).removeAttribute("disabled");
 	}
 				function drawPatch(frame,gifcb){
+					console.log("d"+window.gifFrames.indexOf(frame));
 					var dims=frame.dims;
 					if(!window.frameImageData||dims.width!=window.frameImageData.width||dims.height!=window.frameImageData.height){
 						window.tempCanvas.width=dims.width;
@@ -48,7 +50,10 @@
 					}
 					window.frameImageData.data.set(frame.patch);
 					window.tempCtx.putImageData(window.frameImageData,0,0);
-					window.tempCanvas.toBlob(function(blob){gifcb(window.URL.createObjectURL(blob))});
+					window.tempCanvas.toBlob(function(blob){
+						console.log("e"+window.gifFrames.indexOf(frame));
+						gifcb(window.URL.createObjectURL(blob));
+					});
 				}
 	async function doEverything(btn,gif,url,cb){
 		btn.setAttribute('disabled','disabled');
@@ -59,9 +64,15 @@
 			await new Promise(async r=>{
 				window.scaleGif=false;
 				for(var frm=0;frm<getGifFrames(url).length;frm++){
+					console.log("c"+frm);
 						await new Promise(rr=>drawPatch(window.gifFrames[frm],function(b){
+							console.log("f"+frm);
 							doEverything(btn,gif,b,function(ur){
-								if(frm+1==window.gifFrames.length)cb(ur);
+								console.log("g"+frm);
+								if(frm+1==window.gifFrames.length){
+									cb(ur);
+									console.log("h");
+								}
 								rr();
 							});
 						}));
