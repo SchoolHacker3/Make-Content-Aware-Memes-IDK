@@ -18,11 +18,11 @@
 		window.gif.on('finished',function(blob){document.querySelector("progress").value=0;var url=window.URL.createObjectURL(blob);document.getElementById("r").src=url;document.getElementById("res").href=url;document.getElementById("res").download="aware.gif";document.getElementById("res").style.display="";});
 		window.gif.render();
 		btn.removeAttribute("disabled");
-		window.otherBtn(btn).removeAttribute("disabled");
+		//window.otherBtn(btn).removeAttribute("disabled");
 	}
 	function doEverything(btn,gif,url,cb){
 		btn.setAttribute('disabled','disabled');
-		window.otherBtn(btn).setAttribute('disabled','disabled');
+		//window.otherBtn(btn).setAttribute('disabled','disabled');
 		var img=document.getElementById('i');
 		document.getElementById("res").style.display="none";
 		img.src="";
