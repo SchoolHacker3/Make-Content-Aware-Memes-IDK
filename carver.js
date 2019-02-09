@@ -42,13 +42,15 @@
 	}
 				function drawPatch(frame,gifcb){
 					console.log("d"+window.gifFrames.indexOf(frame));
-					var dims=frame.dims;
-					if(!window.frameImageData||dims.width!=window.frameImageData.width||dims.height!=window.frameImageData.height){
-						window.tempCanvas.width=dims.width;
-						window.tempCanvas.height=dims.height;
-						window.frameImageData=window.tempCtx.createImageData(dims.width,dims.height);
+					for(var i=0;i<=window.gifFrames.indexOf(frame);i++){
+						var dims=window.gifFrames[i].dims;
+						if(!window.frameImageData||dims.width!=window.frameImageData.width||dims.height!=window.frameImageData.height){
+							window.tempCanvas.width=dims.width;
+							window.tempCanvas.height=dims.height;
+							window.frameImageData=window.tempCtx.createImageData(dims.width,dims.height);
+						}
+						window.frameImageData.data.set(window.gifFrames[i].patch);
 					}
-					window.frameImageData.data.set(frame.patch);
 					window.tempCtx.putImageData(window.frameImageData,0,0);
 					window.tempCanvas.toBlob(function(blob){
 						console.log("e"+window.gifFrames.indexOf(frame));
