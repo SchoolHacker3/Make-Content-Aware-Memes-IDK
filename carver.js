@@ -6,6 +6,7 @@ window.gifFrames;
 window.frameImageData;
 window.tempCanvas=document.createElement("CANVAS");
 window.tempCtx=window.tempCanvas.getContext('2d');
+window.giff;
 async function getGifFrames(gifURL){
 	console.log("a");
 	await new Promise(r=>{
@@ -61,7 +62,7 @@ async function doEverything(btn,gif,url,cb){
 	var img=document.getElementById('i');
 	document.getElementById("res").style.display="none";
 	if(window.scaleGif){
-		window.giff=new GIF({workers:5})
+		window.giff=new GIF({workers:5});
 		await new Promise(r=>r(getGifFrames(url)));
 		console.log(window.gifFrames.length);
 		await new Promise(async r=>{
