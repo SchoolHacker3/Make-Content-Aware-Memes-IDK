@@ -1,12 +1,13 @@
   window.url="image.jpg";
   window.scaleGif=false;
   window.otherBtn=function(btn){return [...document.querySelectorAll("button")].filter(v=>v!=btn)[0];};
-	window.wait=1;
+  window.wait=1;
   window.gifFrames;
   window.frameImageData;
   window.tempCanvas=document.createElement("CANVAS");
   window.tempCtx=window.tempCanvas.getContext('2d');
 	async function getGifFrames(gifURL){
+		console.log("a");
 		await new Promise(r=>{
 			var oReq=new XMLHttpRequest();
 			oReq.open("GET",gifURL,true);
@@ -57,8 +58,7 @@
 		if(window.scaleGif){
 			await new Promise(async r=>{
 				window.scaleGif=false;
-				getGifFrames(url);
-				for(var frm=0;frm<window.gifFrames.length;frm++){
+				for(var frm=0;frm<getGifFrames(url).length;frm++){
 						await new Promise(rr=>drawPatch(window.gifFrames[frm],function(b){
 							doEverything(btn,gif,b,function(ur){
 								if(frm+1==window.gifFrames.length)cb(ur);
