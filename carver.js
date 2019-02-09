@@ -1,6 +1,24 @@
   window.url="image.jpg";
+  window.scaleGif=false;
   window.otherBtn=function(btn){return [...document.querySelectorAll("button")].filter(v=>v!=btn)[0];};
 	window.wait=1;
+  window.gifFrames;
+  window.frameImageData;
+  window.tempCanvas=document.createElement("CANVAS");
+  window.tempCtx=window.tempCanvas.getContext('2d');
+	async function getGifFrames(url){
+		await new Promise(r=>{
+			var oReq=new XMLHttpRequest();
+			oReq.open("GET",gifURL,true);
+			oReq.responseType="arraybuffer";
+			oReq.onload=function(oEvent){
+				if(oReq.response)window.gifFrames=(new GIF(oReq.response)).decompressFrames(true);
+				r();
+			};
+			oReq.send(null);
+		});
+	  return window.gifFrames;
+	}
 	async function doGIF(btn,url){
 		window.url=url;
 		window.wait=1;
@@ -20,11 +38,38 @@
 		btn.removeAttribute("disabled");
 		//window.otherBtn(btn).removeAttribute("disabled");
 	}
-	function doEverything(btn,gif,url,cb){
+				function drawPatch(frame,gifcb){
+					var dims=frame.dims;
+					if(!window.frameImageData||dims.width!=window.frameImageData.width||dims.height!=window.frameImageData.height){
+						window.tempCanvas.width=dims.width;
+						window.tempCanvas.height=dims.height;
+						window.frameImageData=window.tempCtx.createImageData(dims.width,dims.height);
+					}
+					window.frameImageData.data.set(frame.patch);
+					window.tempCtx.putImageData(window.frameImageData,0,0);
+					window.tempCanvas.toBlob(function(blob){gifcb(window.URL.createObjectURL(blob));
+				}
+	async function doEverything(btn,gif,url,cb){
 		btn.setAttribute('disabled','disabled');
 		//window.otherBtn(btn).setAttribute('disabled','disabled');
 		var img=document.getElementById('i');
 		document.getElementById("res").style.display="none";
+		if(window.scaleGif){
+			await new Promise(r=>{
+				window.scaleGif=false;
+				for(var frm=0;frm<window.gifFrames.length;frm++){
+						await new Promise(rr=>drawPatch(window.gifFrames[frm],function(b){
+							doEverything(btn,gif,b,function(ur){
+								if(frm+1==window.gifFrames.length)cb(ur);
+								rr();
+							});
+						}));
+				}
+				//repeat doEverything() w/ same params except url is blob of frame
+				r();
+			});
+			return;
+		}
 		img.src="";
 		img.onload=function(){img.onload=function(){};doCarve(this.src,gif,cb,[btn]);}
 		img.src=url;
@@ -183,11 +228,12 @@
 		};
 	}
 	document.querySelector('#input').onchange=function(){
-	var file = document.querySelector('#input').files[0];
-	var reader = new FileReader();
-	reader.addEventListener("load",function(){
-		window.url=reader.result;
-		document.getElementById("i").src=window.url;
-	},false);
-	if(file){reader.readAsDataURL(file);}
-	}
+		var file=document.querySelector('#input').files[0];
+		var reader=new FileReader();
+		reader.addEventListener("load",function(){
+			window.url=reader.result;
+			window.scaleGif=file.type.toLowerCase()=="image/gif";
+			document.getElementById("i").src=window.url;
+		},false);
+		if(file)reader.readAsDataURL(file);
+	};
