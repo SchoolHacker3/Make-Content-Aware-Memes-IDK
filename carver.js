@@ -6,7 +6,7 @@
   window.frameImageData;
   window.tempCanvas=document.createElement("CANVAS");
   window.tempCtx=window.tempCanvas.getContext('2d');
-	async function getGifFrames(url){
+	async function getGifFrames(gifURL){
 		await new Promise(r=>{
 			var oReq=new XMLHttpRequest();
 			oReq.open("GET",gifURL,true);
