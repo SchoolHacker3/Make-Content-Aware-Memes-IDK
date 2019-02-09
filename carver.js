@@ -53,7 +53,10 @@ async function doGIF(btn,url){
 					gifcb(window.URL.createObjectURL(blob));
 				});
 			}
-function maybeThisWillMakeTheGif(){window.giff=new GIF({workers:5});}
+function getGiff(){
+	if(!window.giff)window.giff=new GIF({workers:5});
+	return function(){return window.giff;};
+}
 async function doEverything(btn,gif,url,cb){
 	btn.setAttribute('disabled','disabled');
 	window.otherBtn(btn).setAttribute('disabled','disabled');
@@ -61,7 +64,7 @@ async function doEverything(btn,gif,url,cb){
 	document.getElementById("res").style.display="none";
 	if(window.scaleGif){
 		await new Promise(r=>{
-			maybeThisWillMakeTheGif();
+			getGiff();
 			r(getGifFrames(url));
 		});
 		console.log(window.gifFrames.length);
@@ -73,9 +76,11 @@ async function doEverything(btn,gif,url,cb){
 						console.log("f"+frm);
 						doEverything(btn,gif,b,function(ur){
 							console.log("g"+frm);
-							var img=document.createElement("IMG");
-							img.onload=function(){window.giff.addFrame(img,{delay:50});};
-							img.src=ur;
+							var iimg=document.createElement("IMG");
+							iimg.onload=function(){
+								getGiff().addFrame(iimg,{delay:50});
+							};
+							iimg.src=ur;
 							if(frm+1==window.gifFrames.length){
 								cb(ur,[btn]);
 								window.giff.on('finished',function(blob){var url=window.URL.createObjectURL(blob);document.getElementById("r").src=url;document.getElementById("res").href=url;document.getElementById("res").download="aware.gif";document.getElementById("res").style.display="";});
