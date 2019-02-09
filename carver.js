@@ -2,11 +2,8 @@ window.url="image.jpg";
 window.scaleGif=false;
 window.otherBtn=function(btn){return [...document.querySelectorAll("button")].filter(v=>v!=btn)[0];};
 window.wait=1;
-window.gifFrames;
-window.frameImageData;
 window.tempCanvas=document.createElement("CANVAS");
 window.tempCtx=window.tempCanvas.getContext('2d');
-window.giff;
 async function getGifFrames(gifURL){
 	console.log("a");
 	await new Promise(r=>{
@@ -56,6 +53,7 @@ async function doGIF(btn,url){
 					gifcb(window.URL.createObjectURL(blob));
 				});
 			}
+function maybeThisWillMakeTheGif(){window.giff=new GIF({workers:5});}
 async function doEverything(btn,gif,url,cb){
 	btn.setAttribute('disabled','disabled');
 	window.otherBtn(btn).setAttribute('disabled','disabled');
@@ -63,7 +61,7 @@ async function doEverything(btn,gif,url,cb){
 	document.getElementById("res").style.display="none";
 	if(window.scaleGif){
 		await new Promise(r=>{
-			window.giff=new GIF({workers:5});
+			maybeThisWillMakeTheGif();
 			r(getGifFrames(url));
 		});
 		console.log(window.gifFrames.length);
