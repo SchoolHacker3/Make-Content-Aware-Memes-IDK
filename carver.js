@@ -20,6 +20,8 @@ async function getGifFrames(gifURL){
 	return window.gifFrames;
 }
 async function doGIF(btn,url){
+	//disable input GIF animation because it isn't supported rn
+	window.scaleGif=false;
 	window.url=url;
 	window.wait=1;
 	window.gif=new GIF({workers:5});
@@ -37,6 +39,7 @@ async function doGIF(btn,url){
 	window.gif.render();
 	btn.removeAttribute("disabled");
 	window.otherBtn(btn).removeAttribute("disabled");
+	document.querySelector('#input').removeAttribute("disabled");
 }
 			function drawPatch(frame,gifcb){
 				console.log("d"+window.gifFrames.indexOf(frame));
@@ -56,6 +59,7 @@ async function doGIF(btn,url){
 async function doEverything(btn,gif,url,cb){
 	btn.setAttribute('disabled','disabled');
 	window.otherBtn(btn).setAttribute('disabled','disabled');
+	document.querySelector('#input').setAttribute('disabled','disabled');
 	var img=document.getElementById('i');
 	document.getElementById("res").style.display="none";
 	if(window.scaleGif){
