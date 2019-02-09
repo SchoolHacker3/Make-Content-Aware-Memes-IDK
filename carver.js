@@ -47,7 +47,7 @@
 					}
 					window.frameImageData.data.set(frame.patch);
 					window.tempCtx.putImageData(window.frameImageData,0,0);
-					window.tempCanvas.toBlob(function(blob){gifcb(window.URL.createObjectURL(blob));
+					window.tempCanvas.toBlob(function(blob){gifcb(window.URL.createObjectURL(blob))});
 				}
 	async function doEverything(btn,gif,url,cb){
 		btn.setAttribute('disabled','disabled');
