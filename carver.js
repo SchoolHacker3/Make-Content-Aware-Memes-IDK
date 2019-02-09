@@ -53,9 +53,6 @@ async function doGIF(btn,url){
 					gifcb(window.URL.createObjectURL(blob));
 				});
 			}
-function makeGiff(){
-	window.giff=new GIF({workers:5});
-}
 async function doEverything(btn,gif,url,cb){
 	btn.setAttribute('disabled','disabled');
 	window.otherBtn(btn).setAttribute('disabled','disabled');
@@ -63,7 +60,7 @@ async function doEverything(btn,gif,url,cb){
 	document.getElementById("res").style.display="none";
 	if(window.scaleGif){
 		await new Promise(r=>{
-			makeGiff();
+			window.giff=new GIFuct({workers:5});
 			r(getGifFrames(url));
 		});
 		console.log(window.gifFrames.length);
