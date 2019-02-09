@@ -1,6 +1,5 @@
   window.url="image.jpg";
-  window.btns=document.querySelectorAll("button");
-  window.otherBtn=()=>[...btns].filter(v=>v!=btn)[0];
+  window.otherBtn=()=>[...document.querySelectorAll("button")].filter(v=>v!=btn)[0];
 	window.wait=1;
 	async function doGIF(btn,url){
 		window.url=url;
