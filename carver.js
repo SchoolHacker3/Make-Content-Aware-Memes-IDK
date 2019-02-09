@@ -61,6 +61,7 @@
 		var img=document.getElementById('i');
 		document.getElementById("res").style.display="none";
 		if(window.scaleGif){
+      window.giff=new GIF({workers:5})
 			await new Promise(r=>r(getGifFrames(url)));
 			console.log(window.gifFrames.length);
 			await new Promise(async r=>{
@@ -71,15 +72,19 @@
 							console.log("f"+frm);
 							doEverything(btn,gif,b,function(ur){
 								console.log("g"+frm);
+                var img=document.createElement("IMG");
+                img.onload=function(){window.gif.addFrame(img,{delay:50});};
+                img.src=url;
 								if(frm+1==window.gifFrames.length){
-									cb(ur,[btn]);
+                  cb(ur,[btn]);
+                  window.gif.on('finished',function(blob){var url=window.URL.createObjectURL(blob);document.getElementById("r").src=url;document.getElementById("res").href=url;document.getElementById("res").download="aware.gif";document.getElementById("res").style.display="";});
+                  window.gif.render();
 									console.log("h");
 								}
 								rr();
 							});
 						}));
 				}
-				//repeat doEverything() w/ same params except url is blob of frame
 				r();
 			});
 			return;
