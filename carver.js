@@ -57,6 +57,7 @@
 		if(window.scaleGif){
 			await new Promise(async r=>{
 				window.scaleGif=false;
+				getGifFrames(url);
 				for(var frm=0;frm<window.gifFrames.length;frm++){
 						await new Promise(rr=>drawPatch(window.gifFrames[frm],function(b){
 							doEverything(btn,gif,b,function(ur){
