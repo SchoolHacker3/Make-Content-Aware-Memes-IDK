@@ -72,6 +72,7 @@ async function doEverything(btn,gif,url,cb){
 			window.scaleGif=false;
 			for(var frm=0;frm<window.gifFrames.length;frm++){
 				console.log("c"+frm);
+				console.log(Math.floor(100*frm/window.gifFrames.length)+"% complete");
 					await new Promise(rr=>drawPatch(window.gifFrames[frm],function(b){
 						console.log("f"+frm);
 						doEverything(btn,gif,b,function(ur){
