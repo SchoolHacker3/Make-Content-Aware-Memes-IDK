@@ -39,6 +39,7 @@ async function doGIF(btn,url){
 	window.gif.render();
 	btn.removeAttribute("disabled");
 	window.otherBtn(btn).removeAttribute("disabled");
+	document.querySelectorAll('input[type=checkbox]')[1].removeAttribute("disabled");
 	document.querySelector('#input').removeAttribute("disabled");
 }
 			function drawPatch(frame,gifcb){
@@ -60,6 +61,7 @@ async function doEverything(btn,gif,url,cb){
 	btn.setAttribute('disabled','disabled');
 	window.otherBtn(btn).setAttribute('disabled','disabled');
 	document.querySelector('#input').setAttribute('disabled','disabled');
+	document.querySelectorAll('input[type=checkbox]')[1].setAttribute('disabled','disabled');
 	var img=document.getElementById('i');
 	document.getElementById("res").style.display="none";
 	if(window.scaleGif){
@@ -115,14 +117,25 @@ async function doCarve(url, gif, callback, callbackvars){try{
 	var imgc=new Image();
 	imgc.src=window.c.canvas.toDataURL("image/png");
 	imgc.onload=async function(){
-	window.memvas.width=window.c.h;
-	window.memvas.height=window.c.w;
-	window.memtext.save();
-	window.memtext.translate(window.memvas.width,0);
-	window.memtext.rotate(Math.PI/2);
-	window.memtext.drawImage(imgc,0,0);
-	window.memtext.restore();
+	if(document.querySelectorAll("input[type=checkbox]")[1].checked){
+		window.memvas.width=window.c.h;
+		window.memvas.height=window.c.w;
+		window.memtext.save();
+		window.memtext.translate(window.memvas.width,0);
+		window.memtext.rotate(Math.PI/2);
+		window.memtext.drawImage(imgc,0,0);
+		window.memtext.restore();
+	}else{
+		window.memvas.width=window.c.w;
+		window.memvas.height=window.c.h;
+		window.memtext.drawImage(imgc,0,0);
+	}
 	window.c.canvas.style.display="none";
+	if(!document.querySelectorAll("input[type=checkbox]")[1].checked){
+		if(!gif){document.querySelector("progress").value=0;}
+		callback(window.memvas.toDataURL("image/png"),callbackvars);
+		return;
+	}
 	window.d=new Carver("d",window.memvas.toDataURL("image/png"));
 	while(typeof window.d.img==="undefined"){await new Promise(sleep=>setTimeout(sleep,0));}
 	window.d.canvas.style.display="";
